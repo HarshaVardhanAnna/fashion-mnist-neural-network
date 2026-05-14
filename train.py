@@ -59,7 +59,8 @@ def train(config=None, use_wandb: bool = True):
             f"opt_{cfg.optimizer}_"
             f"lr_{cfg.learning_rate}"
         )
-        wandb.run.save()
+        wandb.save("train.py")
+        wandb.save("src/*.py")
     else:
         cfg = config
 
