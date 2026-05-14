@@ -7,3 +7,10 @@ python -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
 wandb login
 ```
+
+## Usage
+
+### Q1 — Visualise one sample per class
+```bash
+python q1_visualize.py
+```
