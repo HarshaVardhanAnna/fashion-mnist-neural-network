@@ -25,3 +25,18 @@ python train.py --epochs 10 --num_hidden_layers 5 --hidden_size 128 --activation
 python sweep.py
 # Sweep URL will be printed; open it to watch runs in real time
 ```
+
+### Q6 — Fetch sweep results and generate analysis plots
+```bash
+python q6_analysis.py fashion-mnist-nn <your_sweep_id>
+# sweep_id is in the URL: .../sweeps/<sweep_id>
+```
+
+### Q7 — Confusion matrix for the best model
+```bash
+# Load saved model (fast)
+python q7_confusion.py --model_path best_model.npz --activation relu
+
+# Or retrain from scratch
+python q7_confusion.py --epochs 10 --optimizer nadam --activation relu
+```

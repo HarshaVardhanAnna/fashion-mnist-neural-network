@@ -123,3 +123,39 @@ class NeuralNetwork:
 
     def accuracy(self, X: np.ndarray, y: np.ndarray) -> float:
         return float(np.mean(self.predict(X) == y))
+    
+    # Persistence
+    def save(self, path: str):
+        """
+        Serialise weights + biases + architecture to a compressed .npz file.
+        Usage: nn.save("checkpoints/best_model")   # → best_model.npz
+        """
+        arrays = {"layer_sizes": np.array(self.layer_sizes)}
+        for i, (W, b) in enumerate(zip(self.weights, self.biases)):
+            arrays[f"W_{i}"] = W
+            arrays[f"b_{i}"] = b
+        np.savez_compressed(path, **arrays)
+        print(f"Model saved → {path}.npz")
+
+    @staticmethod
+    def load(path: str, activation: str,
+             weight_init: str = "xavier") -> "NeuralNetwork":
+        """
+        Restore a model from a .npz file saved by NeuralNetwork.save().
+        The activation and weight_init strings are needed to reconstruct
+        the object but weights are overwritten from disk.
+        """
+        data        = np.load(path)
+        layer_sizes = data["layer_sizes"].tolist()
+        nn = NeuralNetwork(
+            input_size   = layer_sizes[0],
+            hidden_sizes = layer_sizes[1:-1],
+            output_size  = layer_sizes[-1],
+            activation   = activation,
+            weight_init  = weight_init,
+        )
+        for i in range(nn.n_layers):
+            nn.weights[i] = data[f"W_{i}"]
+            nn.biases[i]  = data[f"b_{i}"]
+        print(f"Model loaded ← {path}")
+        return nn

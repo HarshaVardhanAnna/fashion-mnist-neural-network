@@ -137,7 +137,8 @@ def train(config=None, use_wandb: bool = True):
     if use_wandb:
         wandb.log({"test_accuracy": test_acc})
         wandb.finish()
-
+    # Optionally persist model
+    if hasattr(cfg, "save_path") and cfg.save_path:nn.save(cfg.save_path)
     return nn, test_acc
 
 
@@ -154,6 +155,7 @@ if __name__ == "__main__":
     p.add_argument("--weight_decay",      type=float, default=0.0)
     p.add_argument("--weight_init",       type=str,   default="xavier")
     p.add_argument("--loss",              type=str,   default="cross_entropy")
+    p.add_argument("--save_path", type=str, default=None,help="Save trained model here (omit .npz extension)")
     args = p.parse_args()
 
     train(config=args, use_wandb=False)
