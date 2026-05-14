@@ -1,5 +1,16 @@
 # fashion-mnist-neural-network
-A numpy-only feedforward neural network trained on Fashion-MNIST, with 6 optimizers and wandb experiment tracking.
+A NumPy-only feedforward neural network trained on Fashion-MNIST, implemented completely from scratch without TensorFlow/PyTorch training APIs.
+
+The project includes:
+- manual forward propagation
+- manual backpropagation
+- multiple optimizers
+- Bayesian hyperparameter sweeps using Weights & Biases
+- confusion matrix visualization
+- loss-function comparison
+- experiment tracking and analysis
+
+---
 
 ## Setup
 ```bash
@@ -35,8 +46,21 @@ python q6_analysis.py fashion-mnist-nn <your_sweep_id>
 ### Q7 — Confusion matrix for the best model
 ```bash
 # Load saved model (fast)
-python q7_confusion.py --model_path best_model.npz --activation relu
+python q7_confusion.py --model_path best_model.npz
 
 # Or retrain from scratch
 python q7_confusion.py --epochs 10 --optimizer nadam --activation relu
 ```
+
+### Q8 — Loss function comparison
+```bash
+python q8_loss_compare.py
+```
+
+## Generated Outputs
+
+- q1_samples.png
+- q6_parallel_coords.png
+- q6_breakdowns.png
+- q7_confusion_matrix.png
+- q8_loss_comparison.png
